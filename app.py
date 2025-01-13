@@ -6,15 +6,27 @@ app = Flask(__name__)
 
 @app.route("/")
 def fast():
-    r = requests.get('https://ai.resolus.co.jp/fast')
-    return r.text
+    try:
+        r = requests.get('https://ai.resolus.co.jp/fast')
+        return r.text
+    except Exception as e:
+        app.logger.error(f'{e}', exc_info=True)
+        return 'failed'
 
 @app.route("/slow")
 def slow():
-    r = requests.get('https://ai.resolus.co.jp/slow')
-    return r.text
+    try:
+        r = requests.get('https://ai.resolus.co.jp/slow')
+        return r.text
+    except Exception as e:
+        app.logger.error(f'{e}', exc_info=True)
+        return 'failed'
 
 @app.route("/myip")
 def myip():
-    r = requests.get('https://api.ipify.org/?format=json')
-    return r.text
+    try:
+        r = requests.get('https://api.ipify.org/?format=json')
+        return r.text
+    except Exception as e:
+        app.logger.error(f'{e}', exc_info=True)
+        return 'failed'
