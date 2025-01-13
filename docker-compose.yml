@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    ports:
+      - "15000:8080"
+    # command: bash -c 'flask run --host=0.0.0.0'
+    # command: bash -c 'gunicorn --workers=2 --bind=0.0.0.0 app:app'
+    volumes:
+      - .:/app
