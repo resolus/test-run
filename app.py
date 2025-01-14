@@ -8,7 +8,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def fast():
-    return asyncio.run(get_ext())
+    x = get_sync()
+    return x
 
 @app.route("/slow")
 def slow():
@@ -34,6 +35,16 @@ async def get_ext():
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
             # app.logger.error(response.text)
+            return response.text
+    except Exception as e:
+        app.logger.error(f'{e}', exc_info=True)
+        return 'failed'
+
+def get_sync():
+    try:
+        url = 'https://0ut9kgutfe.execute-api.ap-northeast-1.amazonaws.com/default/mytest'
+        with httpx.Client() as client:
+            response = client.get(url)
             return response.text
     except Exception as e:
         app.logger.error(f'{e}', exc_info=True)
